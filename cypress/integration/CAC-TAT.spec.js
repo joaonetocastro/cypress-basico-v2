@@ -84,7 +84,7 @@ describe('Central de Atendimento ao Cliente TAT', function () {
         })
     })
 
-    it.only('marca ambos os checkboxes e depois desmarca o ultimo', () => {
+    it('marca ambos os checkboxes e depois desmarca o ultimo', () => {
         cy.get('[type=checkbox]')
         .check()
         .last()
@@ -101,7 +101,7 @@ describe('Central de Atendimento ao Cliente TAT', function () {
         })
     })
 
-    it.only('seleciona um arquivo da pasta fixtures', () => {
+    it('seleciona um arquivo da pasta fixtures', () => {
         cy.get('#file-upload')
         .should('not.have.value')
         .selectFile('cypress/fixtures/example.json', {action: 'drag-drop'})
@@ -110,7 +110,7 @@ describe('Central de Atendimento ao Cliente TAT', function () {
         })
     })
 
-    it.only('seleciona um arquivo da pasta fixtures com alias', () => {
+    it('seleciona um arquivo da pasta fixtures com alias', () => {
         cy.fixture('example.json').as('sampleFile')
         
         cy.get('#file-upload')
@@ -119,5 +119,17 @@ describe('Central de Atendimento ao Cliente TAT', function () {
         .should((input) => {
             expect(input[0].files[0].name).to.equal('example.json')
         })
+    })
+
+    it('verifica que a politica de privacidade abre em outra aba sem a necessidade de um click', () => {
+        cy.get('#privacy a').should('have.attr', 'target', '_blank')
+    })
+
+    it.only('verifica que a politica de privacidade abre em outra aba', () => {
+        cy.get('#privacy a')
+        .invoke('removeAttr', 'target')
+        .click()
+
+        cy.contains('Talking About Testing').should('be.visible')
     })
 })
